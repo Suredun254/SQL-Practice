@@ -1,0 +1,80 @@
+/*==========================================================
+	SQL VIEWS
+------------------------------------------------------------
+
+This script illustrates the syntax for following:
+	1. Syntax for Create, 
+	2. Drop View, 
+	3. Rename/Modify View
+	4. Re-difined view
+
+==========================================================
+*/
+
+/*===========================================================
+		1. CREATE VIEW
+=============================================================*/
+
+CREATE VIEW Sales.V_Orders_Summary AS
+(
+	SELECT
+		DATETRUNC(month,OrderDate) AS Order_Month,
+		COUNT(OrderID) AS TotalOrders,
+		COUNT(Quantity) AS TotalQuantities
+	FROM Sales.Orders
+	GROUP BY DATETRUNC(month,OrderDate)
+);
+GO
+
+/*===========================================================
+		2. RENAME VIEW
+=============================================================*/
+---Rename view
+
+   EXEC sp_rename 
+	'Sales.V_Orders_Summary', 
+    'V_Orders_Summary1';
+
+GO
+
+---Modify view body
+
+ALTER VIEW Sales.V_Orders_Summary
+AS (
+	SELECT
+		DATETRUNC(month,OrderDate) AS Order_Month,
+		COUNT(OrderID) AS TotalOrders,
+		COUNT(Quantity) AS TotalQuantities
+	FROM Sales.Orders
+);
+
+GO 
+
+/*===========================================================
+		3. DROP VIEW
+=============================================================*/
+
+IF OBJECT_ID('Sales.V_Orders_Summary', 'V') IS NOT NULL
+    DROP VIEW Sales.V_Orders_Summary;
+GO 
+/*===========================================================
+		4. Re-defined view
+=============================================================*/
+
+IF OBJECT_ID('Sales.V_Orders_Summary', 'V') IS NOT NULL
+    DROP VIEW Sales.V_Orders_Summary;
+GO 
+
+CREATE VIEW Sales.V_Orders_Summary AS
+(
+	SELECT
+		DATETRUNC(month,OrderDate) AS Order_Month,
+		COUNT(OrderID) AS TotalOrders,
+		COUNT(Quantity) AS TotalQuantities
+	FROM Sales.Orders
+	GROUP BY DATETRUNC(month,OrderDate)
+);
+
+
+---Query the view
+SELECT * FROM Sales.V_Orders_Summary;
