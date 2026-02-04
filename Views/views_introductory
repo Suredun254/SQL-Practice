@@ -12,7 +12,7 @@ This script illustrates the syntax for following:
 */
 
 /*===========================================================
-		1. CREATE VIEW
+		1. Create View
 =============================================================*/
 
 CREATE VIEW Sales.V_Orders_Summary AS
@@ -24,10 +24,11 @@ CREATE VIEW Sales.V_Orders_Summary AS
 	FROM Sales.Orders
 	GROUP BY DATETRUNC(month,OrderDate)
 );
+
 GO
 
 /*===========================================================
-		2. RENAME VIEW
+		2. Rename View
 =============================================================*/
 ---Rename view
 
@@ -51,12 +52,13 @@ AS (
 GO 
 
 /*===========================================================
-		3. DROP VIEW
+		3. Drop View
 =============================================================*/
 
 IF OBJECT_ID('Sales.V_Orders_Summary', 'V') IS NOT NULL
     DROP VIEW Sales.V_Orders_Summary;
 GO 
+
 /*===========================================================
 		4. Re-defined view
 =============================================================*/
